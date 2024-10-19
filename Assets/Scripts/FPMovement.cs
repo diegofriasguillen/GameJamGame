@@ -18,6 +18,8 @@ public class FPMovement : MonoBehaviour
 
     public bool canMove = true;
 
+    public AudioSource footstepsRunning;
+
 
     CharacterController characterController;
     void Start()
@@ -39,12 +41,6 @@ public class FPMovement : MonoBehaviour
         float movementDirectionY = moveDirection.y;
         moveDirection = (forward * curSpeedX) + (right * curSpeedY);
 
-
-
-
-
-
-
         characterController.Move(moveDirection * Time.deltaTime);
 
         if (canMove)
@@ -53,6 +49,15 @@ public class FPMovement : MonoBehaviour
             rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
             playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
             transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
+        }
+        
+        if(isRunning == true)
+        {
+            footstepsRunning.enabled = true;
+        }
+        else if(isRunning == false)
+        {
+            footstepsRunning.enabled = false;
         }
 
     }
