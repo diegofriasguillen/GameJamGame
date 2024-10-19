@@ -19,6 +19,10 @@ public class FPMovement : MonoBehaviour
     public bool canMove = true;
 
     public AudioSource footstepsRunning;
+    public AudioSource footstepsWalking;
+
+
+    public bool moving;
 
 
     CharacterController characterController;
@@ -43,7 +47,8 @@ public class FPMovement : MonoBehaviour
 
         characterController.Move(moveDirection * Time.deltaTime);
 
-        if (canMove)
+
+        if (canMove == true)
         {
             rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
             rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
@@ -51,13 +56,24 @@ public class FPMovement : MonoBehaviour
             transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
         }
         
-        if(isRunning == true)
+        if(characterController.velocity.magnitude >= .1)
         {
-            footstepsRunning.enabled = true;
+            if (isRunning)
+            {
+                footstepsRunning.enabled = true;
+                footstepsWalking.enabled = false;
+            }
+            else
+            {
+                footstepsRunning.enabled = false;
+                footstepsWalking.enabled = true;
+            }
+            
         }
-        else if(isRunning == false)
+        else
         {
             footstepsRunning.enabled = false;
+            footstepsWalking.enabled = false;
         }
 
     }
