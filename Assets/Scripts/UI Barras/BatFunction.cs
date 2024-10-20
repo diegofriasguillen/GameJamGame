@@ -27,6 +27,14 @@ public class BatFunction : MonoBehaviour
         b2.SetActive(true);
         isunique = true;
         active = true;
-    } 
+    }
+
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            
+        }
+    }
 
 }

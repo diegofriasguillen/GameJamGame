@@ -5,7 +5,6 @@ using TMPro;
 
 public class Dialogue : MonoBehaviour
 {
-    [SerializeField] private GameObject ActionMark;
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private TMP_Text dialogueText;
 
@@ -50,7 +49,6 @@ public class Dialogue : MonoBehaviour
     {
         didDialogueStart = true;
         dialoguePanel.SetActive(true);
-        ActionMark.SetActive(false);
         lineIndex = 0;
         StartCoroutine(ShowLine());
     }
@@ -95,7 +93,7 @@ public class Dialogue : MonoBehaviour
             Inicializado = true;
             if (!completeText)
             {
-                ActionMark.SetActive(true);
+                //ActionText.SetActive(true);
             }
             Debug.Log("Rango para Hablar");
         }
@@ -105,7 +103,7 @@ public class Dialogue : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Inicializado = false;
-            ActionMark.SetActive(false);
+            //ActionText.SetActive(false);
             Debug.Log("Sin rango para Hablar");
         }
     }
