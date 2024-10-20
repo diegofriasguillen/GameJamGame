@@ -33,10 +33,12 @@ public class CambiarCamara : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && colisionConCuerpo == true)
         {
+            //if(colisionConCuerpo == true)
             sleepSystem.isSleeping = false;
             gameObject.transform.position = almaCuerpo.transform.position;
             gameObject.transform.rotation = almaCuerpo.transform.rotation;
         }
+        
 
 
         if (sleepSystem.isSleeping == false)
@@ -88,18 +90,23 @@ public class CambiarCamara : MonoBehaviour
     }
 
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Alma") && sleepSystem.isSleeping==true)
         {
             textoCuerpo.gameObject.SetActive(true);
             colisionConCuerpo = true;
         }
-        else
+    
+
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Alma") && sleepSystem.isSleeping == true)
         {
             textoCuerpo.gameObject.SetActive(false);
             colisionConCuerpo = false;
         }
-
     }
 }

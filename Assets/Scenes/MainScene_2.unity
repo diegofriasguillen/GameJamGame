@@ -3124,13 +3124,14 @@ GameObject:
   - component: {fileID: 988137754}
   - component: {fileID: 988137753}
   - component: {fileID: 988137752}
+  - component: {fileID: 988137755}
   m_Layer: 0
   m_Name: Camera (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &988137751
 Transform:
   m_ObjectHideFlags: 0
@@ -3249,6 +3250,21 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &988137755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 988137750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5a4de4c056aef4d99e5e8c4e55b164, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sensitivity: 5
+  minX: -50
+  maxX: 50
 --- !u!1 &992655627 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 186551185268490557, guid: 549c69af39b84624b8a053537c407def,
@@ -5322,11 +5338,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camara1: {fileID: 963194227}
-  camara2: {fileID: 0}
+  camara2: {fileID: 988137754}
   almaCuerpo: {fileID: 1880593101}
   sleepSystem: {fileID: 1803188783}
   textoCuerpo: {fileID: 459136742}
   luzNocturna: {fileID: 116180316}
+  colisionConCuerpo: 0
 --- !u!1 &1525250859
 GameObject:
   m_ObjectHideFlags: 0
