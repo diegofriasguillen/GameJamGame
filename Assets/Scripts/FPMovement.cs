@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class FPMovement : MonoBehaviour
 {
+    public static FPMovement instance;
+
     public Camera playerCamera;
+        
     public float walkSpeed;
     public float runSpeed;
-
 
     public float lookSpeed = 2f;
     public float lookXLimit = 45f;
@@ -24,14 +26,33 @@ public class FPMovement : MonoBehaviour
 
     public bool moving;
 
-
     CharacterController characterController;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     void Start()
     {
+       
         characterController = GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
+
+    public void SetSpeed(float w, float r)
+    {
+        walkSpeed = w;
+        runSpeed = r;
+    }
+
 
     void Update()
     {

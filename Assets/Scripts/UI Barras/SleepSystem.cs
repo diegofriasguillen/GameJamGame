@@ -14,6 +14,11 @@ public class SleepSystem : MonoBehaviour, ISleepSystem
     [SerializeField] float percentSlp;
     [SerializeField] UIController UI;
 
+    [Header("Static stats")]
+    float WSpeed = 3;
+    float RSpeed = 4.5f;
+
+
     private void Start()
     {
         StartCoroutine(GameTick());
@@ -65,7 +70,7 @@ public class SleepSystem : MonoBehaviour, ISleepSystem
     }
     public void SumMiedo(int a)//Actualizar miedo y llamar cambios en UI
     {
-        if (miedo < maxMiedo)
+        if (miedo > 0 && miedo < Maxsueno)
         {
             miedo += a;
         }
@@ -125,7 +130,8 @@ public class SleepSystem : MonoBehaviour, ISleepSystem
     IEnumerator GameTick()
     {
         TickActualizarStats();
-        yield return new WaitForSeconds(Random.Range(0.2f,1.2f));
+        float a = Random.Range(0.2f, 1.2f);
+        yield return new WaitForSeconds(a);
         StartCoroutine(GameTick());
     }
 
@@ -138,15 +144,19 @@ public class SleepSystem : MonoBehaviour, ISleepSystem
         {
             case float n when (n >= 25 && n <= 49):
                 Debug.Log("Vel 75%");
+                FPMovement.instance.SetSpeed(WSpeed*.75f,RSpeed*.75f);
                 break;
             case float n when (n >= 50 && n < 74):
                 Debug.Log("Vel 55%");
+                FPMovement.instance.SetSpeed(WSpeed*.55f,RSpeed*.55f);
                 break;
             case float n when (n >= 75 && n <= 100):
                 Debug.Log("Vel 40%");
+                FPMovement.instance.SetSpeed(WSpeed*.40f,RSpeed*.40f);
                 break;
             default:
                 Debug.Log("Vel 100%");
+                FPMovement.instance.SetSpeed(WSpeed,RSpeed);
                 break;
         }
         UI.SetValueSueno(percentSlp);
