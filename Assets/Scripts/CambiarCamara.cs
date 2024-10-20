@@ -9,17 +9,18 @@ public class CambiarCamara : MonoBehaviour
     public Camera camara2;
     public GameObject almaCuerpo;
     public SleepSystem sleepSystem;
-     public GameObject textoCuerpo;
+    public GameObject textoCuerpo;
     public GameObject luzNocturna;
+    public bool colisionConCuerpo=false;
    
     void Start()
     {
-        camara1.enabled = true;
+          
         camara2.enabled = false;
         almaCuerpo.SetActive(false);
         textoCuerpo.SetActive (false);
-       // RenderSettings.ambientIntensity = 1f;
-
+        //RenderSettings.ambientIntensity = 1f;
+        colisionConCuerpo = false;
         luzNocturna.SetActive(false);
     }
 
@@ -28,13 +29,22 @@ public class CambiarCamara : MonoBehaviour
 
     void Update()
     {
-        // cuando duerme
+        
+
+        if (Input.GetKeyDown(KeyCode.Space) && colisionConCuerpo == true)
+        {
+            sleepSystem.isSleeping = false;
+            gameObject.transform.position = almaCuerpo.transform.position;
+            gameObject.transform.rotation = almaCuerpo.transform.rotation;
+        }
+
 
         if (sleepSystem.isSleeping == false)
         {
             almaCuerpo.gameObject.transform.position = gameObject.transform.position;
             almaCuerpo.gameObject.SetActive(false);
             luzNocturna.SetActive(false);
+            textoCuerpo.gameObject.SetActive(false);
 
         }
 
@@ -68,7 +78,7 @@ public class CambiarCamara : MonoBehaviour
 
         }
 
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             if (sleepSystem.isSleeping == false)
             {
@@ -83,16 +93,12 @@ public class CambiarCamara : MonoBehaviour
         if (other.CompareTag("Alma") && sleepSystem.isSleeping==true)
         {
             textoCuerpo.gameObject.SetActive(true);
-            if (Input.GetKeyDown(KeyCode.Z))
-            {
-                sleepSystem.isSleeping = false;
-                gameObject.transform.position = almaCuerpo.transform.position;
-            }
+            colisionConCuerpo = true;
         }
         else
         {
             textoCuerpo.gameObject.SetActive(false);
-
+            colisionConCuerpo = false;
         }
 
     }

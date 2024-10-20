@@ -26,7 +26,7 @@ public class SleepSystem : MonoBehaviour, ISleepSystem
 
     private void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Space))
+       /* if (Input.GetKeyUp(KeyCode.Space))
         {
             if (isSleeping)
             {
@@ -36,7 +36,7 @@ public class SleepSystem : MonoBehaviour, ISleepSystem
             {
                 Dormir();
             }
-        }
+        }*/
     }
 
     public void TickActualizarStats()
