@@ -70,7 +70,7 @@ public class SleepSystem : MonoBehaviour, ISleepSystem
     }
     public void SumMiedo(int a)//Actualizar miedo y llamar cambios en UI
     {
-        if (miedo > 0 && miedo < Maxsueno)
+        if (miedo > 0 && miedo < Maxsueno)//No restar por menos de 0 y no sumar arriba de Max
         {
             miedo += a;
         }
@@ -78,7 +78,9 @@ public class SleepSystem : MonoBehaviour, ISleepSystem
         {
             Despertar();
         }
+        
         float percent = (miedo * 100)/maxMiedo;
+
         UI.SetValueMiedo(percent);
     }
     public void reduccion()
@@ -139,7 +141,9 @@ public class SleepSystem : MonoBehaviour, ISleepSystem
     private void SumSueno(int a)
     {
         sueno += a;
-        percentSlp = (sueno * Maxsueno)/100;
+        percentSlp = (sueno * Maxsueno) / 100;
+        Debug.Log(percentSlp);
+
         switch (percentSlp)
         {
             case float n when (n >= 25 && n <= 49):
