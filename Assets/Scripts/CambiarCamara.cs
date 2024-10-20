@@ -1,4 +1,7 @@
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
+using TMPro;
 
 public class CambiarCamara : MonoBehaviour
 {
@@ -6,12 +9,22 @@ public class CambiarCamara : MonoBehaviour
     public Camera camara2;
     public GameObject almaCuerpo;
     public SleepSystem sleepSystem;
+     public GameObject textoCuerpo;
+    public GameObject luzNocturna;
+   
     void Start()
     {
-        // Al inicio, activamos la cámara 1 y desactivamos la cámara 2
         camara1.enabled = true;
         camara2.enabled = false;
+        almaCuerpo.SetActive(false);
+        textoCuerpo.SetActive (false);
+       // RenderSettings.ambientIntensity = 1f;
+
+        luzNocturna.SetActive(false);
     }
+
+
+
 
     void Update()
     {
@@ -20,23 +33,67 @@ public class CambiarCamara : MonoBehaviour
         if (sleepSystem.isSleeping == false)
         {
             almaCuerpo.gameObject.transform.position = gameObject.transform.position;
-            gameObject.SetActive(false);
+            almaCuerpo.gameObject.SetActive(false);
+            luzNocturna.SetActive(false);
+
         }
 
 
         if (sleepSystem.isSleeping == true) 
         {
-          
+            almaCuerpo.gameObject.SetActive(true);
+            luzNocturna .SetActive(true); 
         }
-        // Si se presiona la tecla "R", intercambiamos entre las cámaras
+
+
+
         if (Input.GetKeyDown(KeyCode.R))
         {
-            if (true)
+            if (sleepSystem.isSleeping == true)
             {
-
+                camara1.enabled = false;
+                camara2.enabled = true;
+          
             }
-            camara1.enabled = !camara1.enabled;
-            camara2.enabled = !camara2.enabled;
+
         }
+        else if (Input.GetKeyUp(KeyCode.R))
+        {
+
+            if (sleepSystem.isSleeping == true)
+            {
+                camara1.enabled = true;
+                camara2.enabled = false;
+            }
+
+        }
+
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            if (sleepSystem.isSleeping == false)
+            {
+                sleepSystem.isSleeping =true;
+            }
+        }
+    }
+
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Alma") && sleepSystem.isSleeping==true)
+        {
+            textoCuerpo.gameObject.SetActive(true);
+            if (Input.GetKeyDown(KeyCode.Z))
+            {
+                sleepSystem.isSleeping = false;
+                gameObject.transform.position = almaCuerpo.transform.position;
+            }
+        }
+        else
+        {
+            textoCuerpo.gameObject.SetActive(false);
+
+        }
+
     }
 }
