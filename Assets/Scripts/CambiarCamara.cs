@@ -31,12 +31,20 @@ public class CambiarCamara : MonoBehaviour
     {
         
 
-        if (Input.GetKeyDown(KeyCode.Space) && colisionConCuerpo == true)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            //if(colisionConCuerpo == true)
-            sleepSystem.isSleeping = false;
-            gameObject.transform.position = almaCuerpo.transform.position;
-            gameObject.transform.rotation = almaCuerpo.transform.rotation;
+            if(colisionConCuerpo == true && sleepSystem.isSleeping==true) 
+            {
+                sleepSystem.isSleeping = false;
+                gameObject.transform.position = almaCuerpo.transform.position;
+                gameObject.transform.rotation = almaCuerpo.transform.rotation;
+            }
+            else if (sleepSystem.isSleeping == false)
+            {
+                sleepSystem.isSleeping = true;
+
+            }
+
         }
         
 
@@ -80,13 +88,6 @@ public class CambiarCamara : MonoBehaviour
 
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (sleepSystem.isSleeping == false)
-            {
-                sleepSystem.isSleeping =true;
-            }
-        }
     }
 
 
