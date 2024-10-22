@@ -29482,6 +29482,10 @@ MonoBehaviour:
   colisionConCuerpo: 0
   cameraFollowCursor: {fileID: 988137755}
   ambiente: {fileID: 1485576476}
+  tempCam: 0
+  CUI: {fileID: 8793251373906868801}
+  OnVisOri: 0
+  penalty: 0
 --- !u!54 &1485576475
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -29521,7 +29525,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 10ab762ea535a5d4393728f14af5fb51, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.715
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -33683,6 +33687,7 @@ MonoBehaviour:
   Maxsueno: 150
   percentSlp: 100
   UI: {fileID: 8793251373906868801}
+  camerach: {fileID: 0}
 --- !u!4 &1803188784
 Transform:
   m_ObjectHideFlags: 0
@@ -38827,7 +38832,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2117335819}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.58, y: 0.187, z: 10.14}
+  m_LocalPosition: {x: -10.1, y: 0.187, z: 0.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -38912,11 +38917,18 @@ MonoBehaviour:
   - {fileID: 235751634}
   - {fileID: 1248881942}
   jugador: {fileID: 1485576470}
-  rangoPersecucion: 10
-  rangoBusqueda: 15
-  tiempoEntreCambio: 5
+  detectionZone: {fileID: 0}
+  sleepSystem: {fileID: 0}
   miedo: 0
-  busqueda: 0
+  tiempoEntreCambio: 5
+  tiempoRecuperacionBusqueda: 10
+  tiempoPersecucion: 10
+  siguienteWaypoint: 0
+  persiguiendoJugador: 0
+  enBusqueda: 0
+  tiempoCambio: 0
+  jugadorEnZona: 0
+  estaEscondido: 0
 --- !u!82 &2117335824
 AudioSource:
   m_ObjectHideFlags: 0
@@ -39331,7 +39343,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.77254903, g: 0.92503184, b: 1, a: 0.44705883}
+  m_Color: {r: 0.77254903, g: 0.9254902, b: 1, a: 0.44705883}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -39758,7 +39770,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -38.65802, y: -31}
+  m_AnchoredPosition: {x: -38.65796, y: -31}
   m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &8362783717246078092
@@ -39837,6 +39849,12 @@ MonoBehaviour:
   sliderMiedo: {fileID: 2293702740422059951}
   sliderSueno: {fileID: 3415395675424487045}
   sliderTCam: {fileID: 1474713719036137241}
+  sliderBgTCam: {fileID: 1692909626198080192}
+  sliderBgTKid: {fileID: 469193685}
+  normal: {r: 0.77254903, g: 0.9254902, b: 1, a: 0.44705883}
+  normalBgCam: {r: 0, g: 0.8980392, b: 1, a: 0.45490196}
+  penalty: {r: 0.6415094, g: 0, b: 0.20125784, a: 0.4745098}
+  penaltyBgCam: {r: 1, g: 0, b: 0, a: 0.3764706}
 --- !u!224 &8832932205810503855
 RectTransform:
   m_ObjectHideFlags: 0

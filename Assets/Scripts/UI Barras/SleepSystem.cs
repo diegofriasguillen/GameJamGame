@@ -15,7 +15,7 @@ public class SleepSystem : MonoBehaviour, ISleepSystem
     [SerializeField] int Maxsueno = 150;
     [SerializeField] float percentSlp;
     [SerializeField] UIController UI;
-    //[serializeField] CambiarCamera camerach;
+    [SerializeField] CambiarCamara camerach;
 
     [Header("Static stats")]
     float WSpeed = 3;

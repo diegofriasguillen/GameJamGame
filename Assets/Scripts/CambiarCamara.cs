@@ -19,7 +19,7 @@ public class CambiarCamara : MonoBehaviour
     public CameraFollowCursor cameraFollowCursor;
     public AudioSource ambiente;
     public float tempCam;
-    public float contador;
+    public UIController CUI;
 
     void Start()
     {
@@ -33,9 +33,6 @@ public class CambiarCamara : MonoBehaviour
         luzNocturna.SetActive(false);
 
     }
-
-
-
 
     void Update()
     {
@@ -62,7 +59,6 @@ public class CambiarCamara : MonoBehaviour
                 sleepSystem.isSleeping = true;
 
             }
-
         }
 
         if (sleepSystem.isSleeping == false)
@@ -87,56 +83,89 @@ public class CambiarCamara : MonoBehaviour
             Vela.SetActive(false);
         }
 
-
-
         DetectCameraChange();
 
     }
 
+    public bool OnVisOri;
+    public bool penalty;
+    private float percentageCamT;
+    private int MaxTemp = 010;
+
+    public void OndetectCh()
+    {
+        if (sleepSystem.isSleeping == true )
+        {
+            camara1.enabled = false;
+            camara2.enabled = true;
+            cameraFollowCursor.view = true;              
+        }
+        else if (tempCam < 0)
+        {
+            camara1.enabled = true;
+            camara2.enabled = false;
+            cameraFollowCursor.view = false;
+        }
+        
+    }
+    
+    void OnDetectUp()
+    {
+        if (sleepSystem.isSleeping == true)
+        {
+            camara1.enabled = true;
+            camara2.enabled = false;
+            cameraFollowCursor.view = false;
+        }
+
+        if (OnVisOri)
+        {
+            OnVisOri = false;
+            penalty = true;
+            CUI.RedColorCam();
+        }
+
+    }
+
+    
     private void DetectCameraChange()
     {
-        if (tempCam <10 && cameraFollowCursor.view == false)
+        if (tempCam < MaxTemp && cameraFollowCursor.view == false)
         {
-            tempCam = tempCam+Time.deltaTime;
-        }
-        if (cameraFollowCursor.view == true)
-        {
-            tempCam = tempCam - Time.deltaTime;
-        }
-
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            if (sleepSystem.isSleeping == true )
+            tempCam += Time.deltaTime;
+            if (tempCam > MaxTemp)
             {
-                contador = 0;
-                camara1.enabled = false;
-                camara2.enabled = true;
-                cameraFollowCursor.view = true;              
-            }
-            else if (tempCam < 0)
-            {
-                camara1.enabled = true;
-                camara2.enabled = false;
-                cameraFollowCursor.view = false;
+                tempCam = MaxTemp;
+                CUI.NormalColorCam(); 
+                
+                if (penalty) penalty = false;
             }
 
         }
-        else if (Input.GetKeyUp(KeyCode.R))
+        if (cameraFollowCursor.view == true && tempCam > 0)
         {
-
-            if (sleepSystem.isSleeping == true)
-            {
-                camara1.enabled = true;
-                camara2.enabled = false;
-                cameraFollowCursor.view = false;
-
-            }
-            else if (true)
-            {
-
-            }
-
+            tempCam -= Time.deltaTime;
         }
+        
+        percentageCamT = (tempCam * 100)/MaxTemp;
+        CUI.SetValueCam(percentageCamT);
+        
+        if (tempCam <= 0)
+        {
+            OnDetectUp();
+        }             
+        
+        if (Input.GetKeyDown(KeyCode.R) && penalty == false)
+        {
+            OnVisOri = true;
+            OndetectCh();   
+        }
+        if (Input.GetKeyUp(KeyCode.R))
+        {
+             OnVisOri = false; 
+             OnDetectUp();
+        }
+        
     }
 
 
