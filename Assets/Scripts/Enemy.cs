@@ -10,7 +10,6 @@ public class Enemy : MonoBehaviour
     public float rangoBusqueda = 15f; // Rango en el que el enemigo comenzará a buscar al jugador
     public float tiempoEntreCambio = 5f; // Tiempo entre cambios de comportamiento (perseguir al jugador o ir a waypoints)
     public int miedo=0;
-
     private NavMeshAgent agente;
     private int siguienteWaypoint = 0;
     private bool persiguiendoJugador = false;

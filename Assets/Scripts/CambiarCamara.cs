@@ -16,7 +16,9 @@ public class CambiarCamara : MonoBehaviour
     public GameObject Vela;
     public bool colisionConCuerpo=false;
     public CameraFollowCursor cameraFollowCursor;
-   
+    public AudioSource ambiente;
+
+
     void Start()
     {
         manosFantasma.gameObject.SetActive(false);
@@ -26,6 +28,7 @@ public class CambiarCamara : MonoBehaviour
         RenderSettings.ambientIntensity = 0.06f;
         colisionConCuerpo = false;
         luzNocturna.SetActive(false);
+
     }
 
 
@@ -33,7 +36,15 @@ public class CambiarCamara : MonoBehaviour
 
     void Update()
     {
-        
+        if (sleepSystem.isSleeping == true && ambiente.pitch<3f)
+        {
+            ambiente.pitch = ambiente.pitch + 0.01f;
+        }
+
+        if (sleepSystem.isSleeping == false && ambiente.pitch >1.1f)
+        {
+            ambiente.pitch = ambiente.pitch - 0.01f;
+        }
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
