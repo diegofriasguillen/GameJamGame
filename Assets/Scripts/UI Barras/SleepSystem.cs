@@ -8,11 +8,14 @@ public class SleepSystem : MonoBehaviour, ISleepSystem
 {
     public bool isSleeping;
     [SerializeField] int miedo;
+    public int _Miedo { get => miedo;}
     [SerializeField] int maxMiedo = 150;
     [SerializeField] int sueno;
+    public int _Sueno { get => sueno;}
     [SerializeField] int Maxsueno = 150;
     [SerializeField] float percentSlp;
     [SerializeField] UIController UI;
+    //[serializeField] CambiarCamera camerach;
 
     [Header("Static stats")]
     float WSpeed = 3;
@@ -23,31 +26,15 @@ public class SleepSystem : MonoBehaviour, ISleepSystem
     {
         StartCoroutine(GameTick());
     }
-
-    private void Update()
-    {
-       /* if (Input.GetKeyUp(KeyCode.Space))
-        {
-            if (isSleeping)
-            {
-                Despertar();
-            }
-            else
-            {
-                Dormir();
-            }
-        }*/
-    }
-
     public void TickActualizarStats()
     {
-        if (isSleeping)//Si esta durmiendo y hay un aumento solo puede ser miedo para despertar y reducimos el sueño
+        if (isSleeping)//Si esta durmiendo y hay un aumento solo puede ser miedo para despertar y reducimos el sueï¿½o
         {
             SumMiedo(1);
 
             SumSueno(-1);
         }
-        else //si hay un aumento y no esta durmiendo debe ser sueño y se reduce el miedo
+        else //si hay un aumento y no esta durmiendo debe ser sueï¿½o y se reduce el miedo
         {
             SumMiedo(-1);
 
@@ -63,7 +50,7 @@ public class SleepSystem : MonoBehaviour, ISleepSystem
         {
             SumMiedo(a);
         }
-        else //si hay un aumento y no esta durmiendo debe ser sueño
+        else //si hay un aumento y no esta durmiendo debe ser sueï¿½o
         {
             SumSueno(a);
         }
@@ -83,60 +70,6 @@ public class SleepSystem : MonoBehaviour, ISleepSystem
 
         UI.SetValueMiedo(percent);
     }
-    public void reduccion()
-    {
-        if (isSleeping)//Si hay una reduccion y esta durmiendo solo puede ser por caramelos y baja el miedo provocado por pesadillas
-        {
-            if (miedo > 0)
-            {
-                SumMiedo(-1);//Restamos miedo
-            }
-        }
-        else//si hay una reduccion y no esta durmiendo solo puede ser por caramelo para dormir mejor
-        {
-            SumSueno(-1);
-        }
-    }
-
-    public void reduccion(int r)
-    {
-        if (isSleeping)
-        {
-            if (miedo > 0)
-            {
-                SumMiedo(-r);//Restamos miedo (Caramelos)
-            }
-        }
-        else
-        {
-            SumSueno(r);//sumamos sueño
-        }
-    }
-
-    public void Despertar()
-    {
-        //DespertarChanges
-        Debug.Log("Despertar");
-        isSleeping = false;
-
-    }
-
-    public void Dormir()
-    {
-        //DormirChanges
-        Debug.Log("Dormido");
-        isSleeping = true;
-
-    }
-
-    IEnumerator GameTick()
-    {
-        TickActualizarStats();
-        float a = Random.Range(0.2f, 1.2f);
-        yield return new WaitForSeconds(a);
-        StartCoroutine(GameTick());
-    }
-
 
     private void SumSueno(int a)
     {
@@ -166,4 +99,61 @@ public class SleepSystem : MonoBehaviour, ISleepSystem
         UI.SetValueSueno(percentSlp);
     }
 
+    public void reduccion()
+    {
+        if (isSleeping)//Si hay una reduccion y esta durmiendo solo puede ser por caramelos y baja el miedo provocado por pesadillas
+        {
+            if (miedo > 0)
+            {
+                SumMiedo(-1);//Restamos miedo
+            }
+        }
+        else//si hay una reduccion y no esta durmiendo solo puede ser por caramelo para dormir mejor
+        {
+            SumSueno(-1);
+        }
+    }
+
+    public void reduccion(int r)
+    {
+        if (isSleeping)
+        {
+            if (miedo > 0)
+            {
+                SumMiedo(-r);//Restamos miedo (Caramelos)
+            }
+        }
+        else
+        {
+            SumSueno(r);//sumamos sueï¿½o
+        }
+    }
+    
+    public void Despertar()
+    {
+        //DespertarChanges
+        Debug.Log("Despertar");
+        isSleeping = false;
+
+    }
+
+    public void Dormir()
+    {
+        //DormirChanges
+        Debug.Log("Dormido");
+        isSleeping = true;
+
+    }
+
+    IEnumerator GameTick()
+    {
+        TickActualizarStats();
+        //camerach.Aumentar(1);
+        float a = Random.Range(0.2f, 2.0f);
+        yield return new WaitForSeconds(a);
+        StartCoroutine(GameTick());
+    }
+
+    
+    
 }

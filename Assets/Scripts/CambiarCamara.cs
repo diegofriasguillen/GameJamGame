@@ -39,16 +39,6 @@ public class CambiarCamara : MonoBehaviour
 
     void Update()
     {
-       
-        if (tempCam <10 && cameraFollowCursor.view == false)
-        {
-            tempCam = tempCam+Time.deltaTime;
-        }
-        if (cameraFollowCursor.view == true)
-        {
-            tempCam = tempCam - Time.deltaTime;
-        }
-
         if (sleepSystem.isSleeping == true && ambiente.pitch<3f)
         {
             ambiente.pitch = ambiente.pitch + 0.01f;
@@ -74,8 +64,6 @@ public class CambiarCamara : MonoBehaviour
             }
 
         }
-        
-
 
         if (sleepSystem.isSleeping == false)
         {
@@ -100,6 +88,21 @@ public class CambiarCamara : MonoBehaviour
         }
 
 
+
+        DetectCameraChange();
+
+    }
+
+    private void DetectCameraChange()
+    {
+        if (tempCam <10 && cameraFollowCursor.view == false)
+        {
+            tempCam = tempCam+Time.deltaTime;
+        }
+        if (cameraFollowCursor.view == true)
+        {
+            tempCam = tempCam - Time.deltaTime;
+        }
 
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -134,7 +137,6 @@ public class CambiarCamara : MonoBehaviour
             }
 
         }
-
     }
 
 
