@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using TMPro;
+using System.Collections;
 
 public class CambiarCamara : MonoBehaviour
 {
@@ -17,10 +18,12 @@ public class CambiarCamara : MonoBehaviour
     public bool colisionConCuerpo=false;
     public CameraFollowCursor cameraFollowCursor;
     public AudioSource ambiente;
-
+    public float tempCam;
+    public float contador;
 
     void Start()
     {
+        tempCam = 10;
         manosFantasma.gameObject.SetActive(false);
         camara2.enabled = false;
         almaCuerpo.SetActive(false);
@@ -36,6 +39,16 @@ public class CambiarCamara : MonoBehaviour
 
     void Update()
     {
+       
+        if (tempCam <10 && cameraFollowCursor.view == false)
+        {
+            tempCam = tempCam+Time.deltaTime;
+        }
+        if (cameraFollowCursor.view == true)
+        {
+            tempCam = tempCam - Time.deltaTime;
+        }
+
         if (sleepSystem.isSleeping == true && ambiente.pitch<3f)
         {
             ambiente.pitch = ambiente.pitch + 0.01f;
@@ -90,12 +103,18 @@ public class CambiarCamara : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            if (sleepSystem.isSleeping == true)
+            if (sleepSystem.isSleeping == true )
             {
+                contador = 0;
                 camara1.enabled = false;
                 camara2.enabled = true;
-                cameraFollowCursor.view = true;
-          
+                cameraFollowCursor.view = true;              
+            }
+            else if (tempCam < 0)
+            {
+                camara1.enabled = true;
+                camara2.enabled = false;
+                cameraFollowCursor.view = false;
             }
 
         }
@@ -107,6 +126,10 @@ public class CambiarCamara : MonoBehaviour
                 camara1.enabled = true;
                 camara2.enabled = false;
                 cameraFollowCursor.view = false;
+
+            }
+            else if (true)
+            {
 
             }
 
@@ -133,5 +156,14 @@ public class CambiarCamara : MonoBehaviour
             textoCuerpo.gameObject.SetActive(false);
             colisionConCuerpo = false;
         }
+    }
+
+    private IEnumerator ProcesarDeteccion()
+    {
+        if (true)
+        {
+
+        }
+        yield return new WaitForSeconds(1f);       
     }
 }

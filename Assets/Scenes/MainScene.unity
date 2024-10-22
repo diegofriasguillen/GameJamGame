@@ -38827,7 +38827,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2117335819}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.35, y: 0.187, z: 1.72}
+  m_LocalPosition: {x: -10.1, y: 0.187, z: 0.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -38912,11 +38912,10 @@ MonoBehaviour:
   - {fileID: 235751634}
   - {fileID: 1248881942}
   jugador: {fileID: 1485576470}
-  rangoPersecucion: 10
-  rangoBusqueda: 15
-  tiempoEntreCambio: 5
   miedo: 0
-  busqueda: 0
+  tiempoEntreCambio: 5
+  tiempoRecuperacionBusqueda: 10
+  tiempoPersecucion: 10
 --- !u!82 &2117335824
 AudioSource:
   m_ObjectHideFlags: 0

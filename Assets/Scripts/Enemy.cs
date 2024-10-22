@@ -4,70 +4,126 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
-    public Transform[] waypoints; // Puntos en el mapa
-    public Transform jugador; // Referencia al jugador
-    public float rangoPersecucion = 10f; // Rango en el que el enemigo comenzará a perseguir al jugador
-    public float rangoBusqueda = 15f; // Rango en el que el enemigo comenzará a buscar al jugador
-    public float tiempoEntreCambio = 5f; // Tiempo entre cambios de comportamiento (perseguir al jugador o ir a waypoints)
-    public int miedo=0;
+    [Header("References")]
+    public Transform[] waypoints;
+    public Transform jugador;
     private NavMeshAgent agente;
+    private SphereCollider detectionZone;
+
+    [Header("Behavior Parameters")]
+    [Range(0, 100)] public int miedo = 0;
+    public float tiempoEntreCambio = 5f;
+    public float tiempoRecuperacionBusqueda = 10f;
+    public float tiempoPersecucion = 10f;
+
+    // Estado del enemigo
     private int siguienteWaypoint = 0;
     private bool persiguiendoJugador = false;
+    private bool enBusqueda = false;
     private float tiempoCambio;
-    public bool busqueda=false;
-    //public int random;
-    void Start()
+    private bool jugadorEnZona = false;
+
+    private void Start()
     {
         agente = GetComponent<NavMeshAgent>();
+        if (agente == null)
+        {
+            Debug.LogError("NavMeshAgent no encontrado en " + gameObject.name);
+            enabled = false;
+            return;
+        }
+
+        detectionZone = gameObject.AddComponent<SphereCollider>();
+        detectionZone.isTrigger = true;
+        detectionZone.radius = 10f; // Puedes ajustar este valor desde el inspector
+
         tiempoCambio = tiempoEntreCambio;
         CambiarComportamiento();
     }
 
-    void Update()
+    private void Update()
     {
-        float distanciaJugador = Vector3.Distance(jugador.position, transform.position);
-        
-
-        // Si el jugador está en rango de búsqueda, busca al jugador
-        if (distanciaJugador <= rangoBusqueda && busqueda == false)
+        if (!jugador)
         {
-            busqueda = true;
-            int random = Random.Range(50, 150);
-            if (random + miedo >=150  && random + miedo <= 250)
-            {
-                int random2 = Random.Range(0, 10);
-                if (random2 >= 8) 
-                {
-                    persiguiendoJugador = true;
-                }
-            }
-            else if (random + miedo >= 251)
-            {
-                int random2 = Random.Range(0, 10);
-                if (random2 >= 8)
-                {
-                    persiguiendoJugador = true;
-                }
-            }
-            ResetCD();
+            Debug.LogWarning("Jugador no asignado en " + gameObject.name);
+            return;
         }
 
-        if (persiguiendoJugador)
+        // Si el jugador está en la zona y no estamos en búsqueda, intentamos detectarlo
+        if (jugadorEnZona && !enBusqueda)
         {
-            // Si el jugador está en rango de persecución, persigue al jugador
-            if (distanciaJugador <= rangoPersecucion)
+            StartCoroutine(ProcesarDeteccion());
+        }
+
+        // Si estamos persiguiendo pero el jugador sale de la zona, cambiamos a patrulla
+        if (persiguiendoJugador && !jugadorEnZona)
+        {
+            CambiarAPatrulla();
+        }
+
+        // Actualizar tiempo de cambio de comportamiento
+        ActualizarTiempoCambio();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        // Verificar si el objeto que entró es el jugador
+        if (other.transform == jugador)
+        {
+            jugadorEnZona = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        // Verificar si el objeto que salió es el jugador
+        if (other.transform == jugador)
+        {
+            jugadorEnZona = false;
+        }
+    }
+
+    private IEnumerator ProcesarDeteccion()
+    {
+        enBusqueda = true;
+
+        int probabilidadBase = Random.Range(50, 150);
+        int probabilidadTotal = probabilidadBase + miedo;
+
+        if (probabilidadTotal >= 130 && probabilidadTotal <= 200)
+        {
+            if (Random.Range(0, 10) >= 8)
             {
-                PerseguirJugador();
+                persiguiendoJugador = true;
+                StartCoroutine(FinalizarPersecucion());
             }
-            else
+        }
+        else if (probabilidadTotal > 200)
+        {
+            if (Random.Range(0, 11) > 5)
             {
-                // Si el jugador no está dentro del rango de persecución, vuelve a los waypoints
-                CambiarComportamiento();
+                persiguiendoJugador = true;
+                StartCoroutine(FinalizarPersecucion());
             }
         }
 
+        yield return new WaitForSeconds(tiempoRecuperacionBusqueda);
+        enBusqueda = false;
+    }
+
+    private IEnumerator FinalizarPersecucion()
+    {
+        yield return new WaitForSeconds(tiempoPersecucion);
+        if (!jugadorEnZona) // Solo terminamos la persecución si el jugador no está en la zona
+        {
+            persiguiendoJugador = false;
+            CambiarAPatrulla();
+        }
+    }
+
+    private void ActualizarTiempoCambio()
+    {
         tiempoCambio -= Time.deltaTime;
-
         if (tiempoCambio <= 0f)
         {
             CambiarComportamiento();
@@ -75,44 +131,51 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void CambiarComportamiento()
+    private void CambiarComportamiento()
     {
-        if (persiguiendoJugador)
+        if (persiguiendoJugador && jugadorEnZona)
         {
-            // Ir hacia el jugador
             PerseguirJugador();
         }
         else
         {
-            // Ir al siguiente waypoint
             IrAlSiguienteWaypoint();
         }
     }
 
-    void PerseguirJugador()
+    private void CambiarAPatrulla()
+    {
+        persiguiendoJugador = false;
+        IrAlSiguienteWaypoint();
+    }
+
+    private void PerseguirJugador()
     {
         agente.SetDestination(jugador.position);
     }
 
-    void IrAlSiguienteWaypoint()
+    private void IrAlSiguienteWaypoint()
     {
-        if (waypoints.Length == 0) return;
+        if (waypoints == null || waypoints.Length == 0)
+        {
+            Debug.LogWarning("No hay waypoints asignados en " + gameObject.name);
+            return;
+        }
 
-        agente.SetDestination(waypoints[siguienteWaypoint].position);   
-        siguienteWaypoint = (siguienteWaypoint + 1) % waypoints.Length; // Ciclar entre los waypoints
+        if (waypoints[siguienteWaypoint] == null)
+        {
+            Debug.LogWarning("Waypoint " + siguienteWaypoint + " es null en " + gameObject.name);
+            return;
+        }
+
+        agente.SetDestination(waypoints[siguienteWaypoint].position);
+        siguienteWaypoint = (siguienteWaypoint + 1) % waypoints.Length;
     }
 
-    IEnumerator ResetCD()
-
+    private void OnDrawGizmosSelected()
     {
-      busqueda = true;
-      yield return new WaitForSeconds(10f);
-    }
-    IEnumerator MonsterPersecucion() 
-    
-    {
-
-
-        yield return new WaitForSeconds(10f);
+        // Dibujar zona de detección en el editor
+        Gizmos.color = Color.yellow;
+       // Gizmos.DrawWireSphere(transform.position, detectionZone?.radius ?? 10f);
     }
 }
