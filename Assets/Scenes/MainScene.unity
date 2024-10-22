@@ -24743,32 +24743,32 @@ PrefabInstance:
     - target: {fileID: 61382804875429510, guid: cb8ac8b69ce85bc40914ccf4448bd850,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.2
+      value: 0.19999999
       objectReference: {fileID: 0}
     - target: {fileID: 61382804875429510, guid: cb8ac8b69ce85bc40914ccf4448bd850,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.2
+      value: 0.19999999
       objectReference: {fileID: 0}
     - target: {fileID: 61382804875429510, guid: cb8ac8b69ce85bc40914ccf4448bd850,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.2
+      value: 0.19999999
       objectReference: {fileID: 0}
     - target: {fileID: 61382804875429510, guid: cb8ac8b69ce85bc40914ccf4448bd850,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 61382804875429510, guid: cb8ac8b69ce85bc40914ccf4448bd850,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.119999945
+      value: 0.119999886
       objectReference: {fileID: 0}
     - target: {fileID: 61382804875429510, guid: cb8ac8b69ce85bc40914ccf4448bd850,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.001
+      value: -0.0009999966
       objectReference: {fileID: 0}
     - target: {fileID: 61382804875429510, guid: cb8ac8b69ce85bc40914ccf4448bd850,
         type: 3}
@@ -26860,6 +26860,10 @@ PrefabInstance:
     - target: {fileID: 1507473793353128, guid: 504734b234267184a82f53a6f9f390db, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1507473793353128, guid: 504734b234267184a82f53a6f9f390db, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4674728155007026, guid: 504734b234267184a82f53a6f9f390db, type: 3}
       propertyPath: m_RootOrder
@@ -36556,7 +36560,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1507473793353128, guid: 504734b234267184a82f53a6f9f390db, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4674728155007026, guid: 504734b234267184a82f53a6f9f390db, type: 3}
       propertyPath: m_RootOrder
@@ -38188,7 +38192,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.52
-  m_Speed: 1.6
+  m_Speed: 1.72
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
