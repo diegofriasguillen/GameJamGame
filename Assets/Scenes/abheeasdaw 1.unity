@@ -574,6 +574,8 @@ MonoBehaviour:
   rangoPersecucion: 10
   rangoBusqueda: 15
   tiempoEntreCambio: 5
+  miedo: 0
+  busqueda: 0
 --- !u!136 &134074174
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -5633,6 +5635,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3475482297626929067, guid: 549c69af39b84624b8a053537c407def,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3495144823852582769, guid: 549c69af39b84624b8a053537c407def,
         type: 3}
       propertyPath: m_StaticEditorFlags
@@ -8621,6 +8628,18 @@ PrefabInstance:
     - {fileID: 3673185130994740866, guid: 549c69af39b84624b8a053537c407def, type: 3}
     - {fileID: 6304700257575869257, guid: 549c69af39b84624b8a053537c407def, type: 3}
     - {fileID: 3720670568102554162, guid: 549c69af39b84624b8a053537c407def, type: 3}
+    - {fileID: 3673193521864439698, guid: 549c69af39b84624b8a053537c407def, type: 3}
+    - {fileID: 3260642273175207677, guid: 549c69af39b84624b8a053537c407def, type: 3}
+    - {fileID: 5095502300261579081, guid: 549c69af39b84624b8a053537c407def, type: 3}
+    - {fileID: 3360119729557441637, guid: 549c69af39b84624b8a053537c407def, type: 3}
+    - {fileID: 3673371944141063069, guid: 549c69af39b84624b8a053537c407def, type: 3}
+    - {fileID: 1751873536512859117, guid: 549c69af39b84624b8a053537c407def, type: 3}
+    - {fileID: 4223362671095656682, guid: 549c69af39b84624b8a053537c407def, type: 3}
+    - {fileID: 3674741053382175812, guid: 549c69af39b84624b8a053537c407def, type: 3}
+    - {fileID: 3674741053439550941, guid: 549c69af39b84624b8a053537c407def, type: 3}
+    - {fileID: 3673335227139923297, guid: 549c69af39b84624b8a053537c407def, type: 3}
+    - {fileID: 3673706105402553017, guid: 549c69af39b84624b8a053537c407def, type: 3}
+    - {fileID: 3673592749078973935, guid: 549c69af39b84624b8a053537c407def, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 3674741053269167965, guid: 549c69af39b84624b8a053537c407def,
         type: 3}

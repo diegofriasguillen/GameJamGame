@@ -11,15 +11,19 @@ public class CambiarCamara : MonoBehaviour
     public SleepSystem sleepSystem;
     public GameObject textoCuerpo;
     public GameObject luzNocturna;
+    public GameObject manosVivas;
+    public GameObject manosFantasma;
+    public GameObject Vela;
     public bool colisionConCuerpo=false;
+    public CameraFollowCursor cameraFollowCursor;
    
     void Start()
     {
-          
+        manosFantasma.gameObject.SetActive(false);
         camara2.enabled = false;
         almaCuerpo.SetActive(false);
         textoCuerpo.SetActive (false);
-        //RenderSettings.ambientIntensity = 1f;
+        RenderSettings.ambientIntensity = 0.06f;
         colisionConCuerpo = false;
         luzNocturna.SetActive(false);
     }
@@ -55,14 +59,20 @@ public class CambiarCamara : MonoBehaviour
             almaCuerpo.gameObject.SetActive(false);
             luzNocturna.SetActive(false);
             textoCuerpo.gameObject.SetActive(false);
-
+            cameraFollowCursor.view = false;
+            manosFantasma.SetActive(false);
+            manosVivas.SetActive(true);
+            Vela.SetActive(true);
         }
 
 
         if (sleepSystem.isSleeping == true) 
         {
             almaCuerpo.gameObject.SetActive(true);
-            luzNocturna .SetActive(true); 
+            luzNocturna .SetActive(true);
+            manosFantasma.SetActive(true);
+            manosVivas.SetActive(false);
+            Vela.SetActive(false);
         }
 
 
@@ -73,6 +83,7 @@ public class CambiarCamara : MonoBehaviour
             {
                 camara1.enabled = false;
                 camara2.enabled = true;
+                cameraFollowCursor.view = true;
           
             }
 
@@ -84,6 +95,8 @@ public class CambiarCamara : MonoBehaviour
             {
                 camara1.enabled = true;
                 camara2.enabled = false;
+                cameraFollowCursor.view = false;
+
             }
 
         }

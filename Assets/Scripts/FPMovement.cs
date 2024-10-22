@@ -14,6 +14,7 @@ public class FPMovement : MonoBehaviour
     public float lookSpeed = 2f;
     public float lookXLimit = 45f;
 
+    public CameraFollowCursor cameraFollowCursor;
 
     Vector3 moveDirection = Vector3.zero;
     float rotationX = 0;
@@ -56,46 +57,50 @@ public class FPMovement : MonoBehaviour
 
     void Update()
     {
-
-        Vector3 forward = transform.TransformDirection(Vector3.forward);
-        Vector3 right = transform.TransformDirection(Vector3.right);
-
-        bool isRunning = Input.GetKey(KeyCode.LeftShift);
-        float curSpeedX = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Vertical") : 0;
-        float curSpeedY = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Horizontal") : 0;
-        float movementDirectionY = moveDirection.y;
-        moveDirection = (forward * curSpeedX) + (right * curSpeedY);
-
-        characterController.Move(moveDirection * Time.deltaTime);
-
-
-        if (canMove == true)
-        {
-            rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
-            rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
-            playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
-            transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
-        }
         
-        if(characterController.velocity.magnitude >= .1)
-        {
-            if (isRunning)
+            Vector3 forward = transform.TransformDirection(Vector3.forward);
+            Vector3 right = transform.TransformDirection(Vector3.right);
+
+            bool isRunning = Input.GetKey(KeyCode.LeftShift);
+            float curSpeedX = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Vertical") : 0;
+            float curSpeedY = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Horizontal") : 0;
+            float movementDirectionY = moveDirection.y;
+            moveDirection = (forward * curSpeedX) + (right * curSpeedY);
+
+            characterController.Move(moveDirection * Time.deltaTime);
+            if (cameraFollowCursor.view == false)
             {
-                footstepsRunning.enabled = true;
-                footstepsWalking.enabled = false;
+            if (canMove == true)
+            {
+                rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
+                rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
+                playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
+                transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
+            }
+
+            if (characterController.velocity.magnitude >= .1)
+            {
+                if (isRunning)
+                {
+                    footstepsRunning.enabled = true;
+                    footstepsWalking.enabled = false;
+                }
+                else
+                {
+                    footstepsRunning.enabled = false;
+                    footstepsWalking.enabled = true;
+                }
+
             }
             else
             {
                 footstepsRunning.enabled = false;
-                footstepsWalking.enabled = true;
+                footstepsWalking.enabled = false;
             }
-            
+
+
         }
-        else
-        {
-            footstepsRunning.enabled = false;
-            footstepsWalking.enabled = false;
-        }
+
 
     }
 
