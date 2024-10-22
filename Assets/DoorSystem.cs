@@ -33,7 +33,6 @@ public class DoorSystem : MonoBehaviour
                 estado = true;
                 animator.SetBool("seAbrio", true);
                 StartCoroutine(ActivacionTrigger());
-
             }
         }
         
@@ -75,6 +74,5 @@ public class DoorSystem : MonoBehaviour
         box.isTrigger = true;
         yield return new WaitForSeconds(0.9f);
         box.isTrigger = false;
-
     }
 }
