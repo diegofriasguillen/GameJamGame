@@ -8,20 +8,22 @@ public class Enemy : MonoBehaviour
     public Transform[] waypoints;
     public Transform jugador;
     private NavMeshAgent agente;
-    private SphereCollider detectionZone;
-
+    public SphereCollider detectionZone;
+    public SleepSystem sleepSystem;
     [Header("Behavior Parameters")]
-    [Range(0, 100)] public int miedo = 0;
+    [Range(0, 100)]
+    public int miedo = 0;
     public float tiempoEntreCambio = 5f;
     public float tiempoRecuperacionBusqueda = 10f;
     public float tiempoPersecucion = 10f;
 
     // Estado del enemigo
-    private int siguienteWaypoint = 0;
-    private bool persiguiendoJugador = false;
-    private bool enBusqueda = false;
-    private float tiempoCambio;
-    private bool jugadorEnZona = false;
+    public int siguienteWaypoint = 0;
+    public bool persiguiendoJugador = false;
+    public bool enBusqueda = false;
+    public float tiempoCambio;
+    public bool jugadorEnZona = false;
+    public bool estaEscondido=false;
 
     private void Start()
     {
@@ -35,7 +37,7 @@ public class Enemy : MonoBehaviour
 
         detectionZone = gameObject.AddComponent<SphereCollider>();
         detectionZone.isTrigger = true;
-        detectionZone.radius = 10f; // Puedes ajustar este valor desde el inspector
+        detectionZone.radius = 10f; 
 
         tiempoCambio = tiempoEntreCambio;
         CambiarComportamiento();
@@ -43,6 +45,7 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
+        miedo = sleepSystem._Miedo;
         if (!jugador)
         {
             Debug.LogWarning("Jugador no asignado en " + gameObject.name);
@@ -54,11 +57,14 @@ public class Enemy : MonoBehaviour
         {
             StartCoroutine(ProcesarDeteccion());
         }
-
+        if (persiguiendoJugador == true)
+        {
+            PerseguirJugador();
+        }
         // Si estamos persiguiendo pero el jugador sale de la zona, cambiamos a patrulla
         if (persiguiendoJugador && !jugadorEnZona)
         {
-            CambiarAPatrulla();
+            //CambiarAPatrulla();
         }
 
         // Actualizar tiempo de cambio de comportamiento
