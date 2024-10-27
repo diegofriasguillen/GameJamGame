@@ -64,6 +64,7 @@ public class CambiarCamara : MonoBehaviour
         if (sleepSystem.isSleeping == false)
         {
             almaCuerpo.gameObject.transform.position = gameObject.transform.position;
+            almaCuerpo.gameObject.transform.rotation = gameObject.transform.rotation;
             almaCuerpo.gameObject.SetActive(false);
             luzNocturna.SetActive(false);
             textoCuerpo.gameObject.SetActive(false);
